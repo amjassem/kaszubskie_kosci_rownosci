@@ -1,5 +1,10 @@
 from flask import Flask
+import pandas as pd
+
+
 app = Flask(__name__)
+scores = pd.DataFrame(index=[0, 1], columns=["A", "B"])
+
 
 @app.route("/")
 def index():
