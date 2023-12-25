@@ -26,4 +26,4 @@ def send():
     return render_template('index.html', stored_values=stored_values)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
