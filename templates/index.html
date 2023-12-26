@@ -3,20 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Chat App</title>
+    <title>Main Section</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
-    <h1>Welcome to the Simple Chat App</h1>
-    <form action="/send" method="post">
-        <label for="message">Enter your message:</label>
-        <input type="text" id="message" name="message" required>
-        <button type="submit">Send</button>
+    <div class="top-section">
+        <h1>Kaszubskie Kości Równości</h1>
+        Antoni Abraham wraz ze swoim wiernym puckim 13. Legionem stoi nad brzegiem Raduni.
+        Wie, że wystarczy jeden rozkaz aby na wieki zmienić losy Kaszub. <br>
+        W Tobie leży ostatnia szansa na zażegnanie konfliktu. Czy uda Ci się zrównać kości Północy i Południa?
+    </div>
+
+    <div class="dice-section">
+
+        <h2>Kości zostały rzucone...</h2>
+
+        <div class="source-container">
+            {{img_html_0 | safe}}
+            {{img_html_1 | safe}}
+            {{img_html_2 | safe}}
+            {{img_html_3 | safe}}
+            {{img_html_4 | safe}}
+            <button class="return-button" onclick="resetDices()">Wróć kości</button>
+            <button class="forfeit-button" onclick="forfeit()">Pora się poddać</button>
+        </div>
+
+        <h2>Kaszuby Północne</h2>
+
+        <div class="group-container" id="group-container0">
+            <div class="drop-container" id="drop-container0-0" data-group="0" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="operation-container"><select class="operation" id="operation-0-0" data-group="0" onchange="updateOperations(0, 0)">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="x">x</option>
+                <option value="÷">/</option>
+            </select></div>
+            <div class="drop-container" id="drop-container0-1" data-group="0" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="operation-container"><select class="operation" id="operation-0-1" data-group="0" onchange="updateOperations(0, 1)">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="x">x</option>
+                <option value="÷">/</option>
+            </select></div>
+            <div class="drop-container" id="drop-container0-2" data-group="0" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="operation-container" id="group0-sum">=0</div>
+        </div>
+
+        <h2>Kaszuby Południowe</h2>
+        <div class="group-container" id="group-container1">
+            <div class="drop-container" id="drop-container1-0" data-group="1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="operation-container"><select class="operation" id="operation-1-0" data-group="0" onchange="updateOperations(1, 0)">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="x">x</option>
+                <option value="÷">/</option>
+            </select></div>
+            <div class="drop-container" id="drop-container1-1" data-group="1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="operation-container"><select class="operation" id="operation-1-1" data-group="0" onchange="updateOperations(1, 1)">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="x">x</option>
+                <option value="÷">/</option>
+            </select></div>
+            <div class="drop-container" id="drop-container1-2" data-group="1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="operation-container" id="group1-sum">=0</div>
+        </div>
+
+        <div class="solution-section">
+            <button class="solution-button" id="submit-solution" onclick="submitSolution()">Zaproponuj rozwiązanie konfliktu</button>
+            <div class="response-section">
+                <label class="response-label" id="response"></label>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="scoring-section">
+    <form id="player-name-form">
+        <label for="player_name_inp">Twoje imię:</label>
+        <input type="text" id="player_name_inp" name="player_name" required value={{player_name}}>
+        <button type="button" id="player-name-btn" onclick="savePlayerName()">Zapamiętajta</button>
     </form>
 
-    <!-- Display the stored values in a table -->
-    {% if stored_values %}
-    <h2>Stored Values</h2>
-    {{ stored_values | safe }}
-    {% endif %}
+    <h3>Rezultaty:</h3>
+    {{scores_html | safe}}
+
+    </div>
+
 </body>
 </html>

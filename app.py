@@ -1,29 +1,50 @@
-from flask import Flask, render_template, request
-import pandas as pd
-import os
+from flask import Flask, render_template, request, make_response
+import secrets
+
+from state import GameState
+
+from urllib import parse
+
 
 app = Flask(__name__)
-app.template_folder = os.path.abspath('templates')
+app.config['SECRET_KEY'] = secrets.token_hex(16)
 
-# Initialize a Pandas DataFrame to store values
-data = pd.DataFrame(columns=['User', 'Message'])
+game_state = GameState()
 
-@app.route('/')
+
+@app.route('/', methods=['GET'])
 def index():
-    # Display the stored values in the DataFrame
-    stored_values = data.to_html(index=False)
-    return render_template('index.html', stored_values=stored_values)
+    player_name = parse.unquote(request.cookies.get('player_name') or "")
+    if player_name:
+        game_state.activate_player(player_name)
 
-@app.route('/send', methods=['POST'])
-def send():
-    user_message = request.form.get('message')
+    return render_template(
+        'index.html',
+        player_name=player_name,
+        **game_state.__dict__)
 
-    # Add the entered value to the DataFrame
-    data.loc[len(data)] = ['User', user_message]
+@app.route('/forfeit/', methods=['POST'])
+def forfeit():
+    player_name = request.cookies.get("player_name")
+    is_forfeit = game_state.submit_forfeit(player_name)
+    if is_forfeit:
+        txt = "Z Twoim głosem przepadła ostatnia nadzieja na rozwiązanie..."
+    else:
+        txt = "Może i Ty już się poddałeś, ale inni dalej walczą!"
+    return txt
 
-    # Display the stored values in the DataFrame
-    stored_values = data.to_html(index=False)
-    return render_template('index.html', stored_values=stored_values)
+@app.route('/solution/', methods=['POST'])
+def solution():
+    player_name = request.cookies.get("player_name")
+    game_state.submit_solution(player_name)
+    return game_state.get_valid_response()
 
-if __name__ == '__main__':
-    app.run()
+
+@app.route('/invalid/', methods=['POST'])
+def invalid():
+    return game_state.get_invalid_response()
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0')
+
