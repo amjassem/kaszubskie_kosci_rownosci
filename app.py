@@ -9,7 +9,7 @@ from urllib import parse
 app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(16)
 
-game_state = GameState()
+game_state = GameState(app)
 
 
 @app.route('/', methods=['GET'])

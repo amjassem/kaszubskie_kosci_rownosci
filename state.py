@@ -25,7 +25,9 @@ VALIDS = [
 ]
 
 class GameState:
-    def __init__(self):
+    def __init__(self, app):
+        self.app = app
+
         self.draws = tuple(np.random.choice(VALUES, size=6))
         self.draws_id = hash(self.draws)
         self.img_html_0 = self.generate_image_html(0)
@@ -49,8 +51,9 @@ class GameState:
 
     def generate_image_html(self, i: int) -> str:
         draw = self.draws[i]
+        img_path = rf"{self.app.static_url_path}\img\D{draw}.png"
         html = f'<div class="start-container" id=start{i} ondrop="drop(event)" ondragover="allowDrop(event)">\n'
-        html += rf'    <img class="dice-img" id="image{i}" src="static\img\D{draw}.png" num-value="{draw}" image-id={i}'
+        html += rf'    <img class="dice-img" id="image{i}" src="{img_path}" num-value="{draw}" image-id={i}'
         html += ' draggable="true" ondragstart="dragStart(event)">\n'
         html += '</div>\n'
         return html
