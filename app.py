@@ -13,7 +13,7 @@ app.config['SECRET_KEY'] = secrets.token_hex(16)
 def index():
 
     return render_template(
-        'index.html', dice_img="img/D1.png")
+        'index.html')
 
 
 if __name__ == "__main__":
