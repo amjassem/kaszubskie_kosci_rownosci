@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import datetime as dt
+from flask import url_for
 
 
 VALUES = [1, 2, 3, 4, 5, 6]
@@ -25,16 +26,16 @@ VALIDS = [
 ]
 
 class GameState:
-    def __init__(self, app):
-        self.app = app
+    def __init__(self):
+        self.dice_img_urls = dict()
 
-        self.draws = tuple(np.random.choice(VALUES, size=6))
-        self.draws_id = hash(self.draws)
-        self.img_html_0 = self.generate_image_html(0)
-        self.img_html_1 = self.generate_image_html(1)
-        self.img_html_2 = self.generate_image_html(2)
-        self.img_html_3 = self.generate_image_html(3)
-        self.img_html_4 = self.generate_image_html(4)
+        self.draws = None
+        self.draws_id = None
+        self.img_html_0 = None
+        self.img_html_1 = None
+        self.img_html_2 = None
+        self.img_html_3 = None
+        self.img_html_4 = None
 
         self.fails = 0
         self.players = pd.DataFrame(columns=["Score", "Last_Active", "Forfeit_Vote"])
@@ -51,9 +52,9 @@ class GameState:
 
     def generate_image_html(self, i: int) -> str:
         draw = self.draws[i]
-        img_path = rf"{self.app.static_url_path}\img\D{draw}.png"
+        img_url = url_for('static', filename=f'img\D{draw}.png')
         html = f'<div class="start-container" id=start{i} ondrop="drop(event)" ondragover="allowDrop(event)">\n'
-        html += rf'    <img class="dice-img" id="image{i}" src="{img_path}" num-value="{draw}" image-id={i}'
+        html += rf'    <img class="dice-img" id="image{i}" src="{img_url}" num-value="{draw}" image-id={i}'
         html += ' draggable="true" ondragstart="dragStart(event)">\n'
         html += '</div>\n'
         return html

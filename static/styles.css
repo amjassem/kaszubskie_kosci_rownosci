@@ -2,27 +2,32 @@ body {
     background-color: black;
 }
 
+.section {
+    background-color: #fce803;
+    border: 1px solid #000;
+    margin: 0.5%;
+    padding: 0.5%;
+}
 
-#image-container {
+.main-section {
+    float: left;
+    width: 60%;
+}
+
+.scoring-section {
+    float: right;
+    width: 35%;
+}
+
+.container-section {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    align-items: center; /* Optional: align items vertically in the center */
+    border: 1px solid #000; /* Optional: Add borders for visibility */
+    margin: 5px; /* Optional: Add margin for spacing between elements */
+    padding: 5px; /* Optional: Add padding for spacing within elements */
 }
 
-img {
-    width: 100px;
-    height: 100px;
-}
-
-.start-container {
-    width: 100px;
-    height: 100px;
-    border: 2px dashed #aaa;
-    display: inline-block;
-    background-color: #eee;
-}
-
-.drop-container {
+.container {
     width: 100px;
     height: 100px;
     border: 2px dashed #aaa;
@@ -31,71 +36,8 @@ img {
     background-color: #ccc;
 }
 
-.source-container {
-    display: flex;
-    align-items: center; /* Optional: align items vertically in the center */
-    border: 1px solid #000; /* Optional: Add borders for visibility */
-    margin: 5px; /* Optional: Add margin for spacing between elements */
-    padding: 5px; /* Optional: Add padding for spacing within elements */
-}
-
-.group-container {
-    display: flex;
-    align-items: center; /* Optional: align items vertically in the center */
-    border: 1px solid #000; /* Optional: Add borders for visibility */
-    margin: 5px; /* Optional: Add margin for spacing between elements */
-    padding: 5px; /* Optional: Add padding for spacing within elements */
-}
-
-.operation-container select {
-    font-size: 32px;
-}
-
-.operation-container {
-    font-size: 32px;
-}
-
-.return-button {
-    width: 100px;
-    height: 100px;
-}
-
-.forfeit-button {
-    width: 100px;
-    height: 100px;
-}
-
-.solution-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.solution-button {
-    height: 100px;
-    width: 90%;
-}
-
 .response-label {
     font-size: 20px;
     font-weight: bold;
-}
-
-.dice-section {
-    float: left;
-    width: 60%;
-    background-color: #fce803;
-}
-
-.scoring-section {
-    float: left;
-    width: 40%;
-    background-color: #fce803;
-}
-
-.top-section {
-    width: 100%;
-    background-color: #fce803;
+    margin: 5px;
 }
